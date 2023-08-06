@@ -1,17 +1,17 @@
 import { Canvas } from '@react-three/fiber';
 import { OrbitControls, Stats } from '@react-three/drei';
-
 import { Physics } from '@react-three/cannon'
 import { Color } from 'three';
 
 import styles from './App.module.scss';
+import { Floor } from './components/Floor';
 
 function App() {
   return (
     <div className={styles.app}>
       <Canvas 
         shadows 
-        onPointerDown={(e) => (e.target as HTMLCanvasElement).requestPointerLock()}
+        // onPointerDown={(e) => (e.target as HTMLCanvasElement).requestPointerLock()}
       >
         <directionalLight
           intensity={2}
@@ -29,6 +29,7 @@ function App() {
         <ambientLight color={new Color('#d1eaff')} intensity={1} />
         <Physics>
           {/* LEVEL */}
+          <Floor />
         </Physics>
         <OrbitControls />
         <Stats />
