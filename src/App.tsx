@@ -1,7 +1,11 @@
 import { Canvas } from '@react-three/fiber';
-import { OrbitControls, Stats } from '@react-three/drei';
+import {
+  // OrbitControls,
+  Stats,
+  Environment
+} from '@react-three/drei';
 import { Physics } from '@react-three/cannon'
-import { Color } from 'three';
+// import { Color } from 'three';
 import { Level } from './components/Level';
 
 import styles from './App.module.scss';
@@ -11,10 +15,15 @@ function App() {
     <div className={styles.app}>
       <Canvas 
         shadows 
-        // onPointerDown={(e) => (e.target as HTMLCanvasElement).requestPointerLock()}
+        onPointerDown={(e) => (e.target as HTMLCanvasElement).requestPointerLock()}
       >
+        <Environment
+          files="public/test.hdr"
+          background
+          blur={0.5}
+        />
         <directionalLight
-          intensity={2}
+          intensity={1}
           castShadow={true}
           shadow-bias={-0.00015}
           shadow-radius={4}
@@ -26,12 +35,14 @@ function App() {
           shadow-camera-top={30}
           shadow-camera-bottom={-30}
         />
-        <ambientLight color={new Color('#d1eaff')} intensity={1} />
+        {/* TEST LIGHT */}
+        {/* <ambientLight color={new Color('#d1eaff')} intensity={1} /> */}
         <Physics>
           {/* LEVEL */}
           <Level />
         </Physics>
-        <OrbitControls />
+        {/* TEST */}
+        {/* <OrbitControls /> */}
         <Stats />
       </Canvas>
     </div>

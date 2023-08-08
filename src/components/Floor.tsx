@@ -26,10 +26,10 @@ export const Floor = () => {
         <planeGeometry args={[100, 100]} />
         <meshStandardMaterial transparent opacity={0} />
       </mesh>
-      <primitive object={ground.scene.clone()} position={[0, -0.1, 0]}/>
-      <primitive object={ground.scene.clone()} position={[10, -0.1, 0]}/>
-      <primitive object={ground.scene.clone()} position={[0, -0.1, -10]}/>
-      <primitive object={ground.scene.clone()} position={[10, -0.1, -10]}/>
+      <primitive object={ground.scene.clone()} position={[0, -0.05, 0]}/>
+      <primitive object={ground.scene.clone()} position={[10, -0.05, 0]}/>
+      <primitive object={ground.scene.clone()} position={[0, -0.05, -10]}/>
+      <primitive object={ground.scene.clone()} position={[10, -0.05, -10]}/>
     </group>
   )
 }
