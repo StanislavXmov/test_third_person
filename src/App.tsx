@@ -2,9 +2,9 @@ import { Canvas } from '@react-three/fiber';
 import { OrbitControls, Stats } from '@react-three/drei';
 import { Physics } from '@react-three/cannon'
 import { Color } from 'three';
+import { Level } from './components/Level';
 
 import styles from './App.module.scss';
-import { Floor } from './components/Floor';
 
 function App() {
   return (
@@ -29,7 +29,7 @@ function App() {
         <ambientLight color={new Color('#d1eaff')} intensity={1} />
         <Physics>
           {/* LEVEL */}
-          <Floor />
+          <Level />
         </Physics>
         <OrbitControls />
         <Stats />
