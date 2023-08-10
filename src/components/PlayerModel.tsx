@@ -18,8 +18,9 @@ interface SceneModel extends GLTF {
 export const PlayerModel = () => {
   const ref = useRef<Group>(null);
   const model = useGLTF('public/idle.glb') as SceneModel;
-  const walkAnimation = useGLTF('public/walking.glb').animations
-  const jumpAnimation = useGLTF('public/jumping.glb').animations
+  const walkAnimation = useGLTF('public/walking.glb').animations;
+  const jumpAnimation = useGLTF('public/jumping.glb').animations;
+  const runningAnimation = useGLTF('public/running.glb').animations;
   const idleAnimation = model.animations;
 
   const { actions, mixer } = useStore((state) => state);
@@ -29,6 +30,7 @@ export const PlayerModel = () => {
       actions['idle'] = mixer.clipAction(idleAnimation[0], ref.current);
       actions['walk'] = mixer.clipAction(walkAnimation[0], ref.current);
       actions['jump'] = mixer.clipAction(jumpAnimation[0], ref.current);
+      actions['run'] = mixer.clipAction(runningAnimation[0], ref.current);
       actions['idle'].play();
     }
   }, [actions, mixer, idleAnimation]);
@@ -56,4 +58,5 @@ useGLTF.preload([
   'public/idle.glb',
   'public/walking.glb',
   'public/jumping.glb',
+  'public/running.glb',
 ]);

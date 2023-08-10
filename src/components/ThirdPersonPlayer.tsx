@@ -8,7 +8,7 @@ import useKeyboard from '../hooks/useKeyboard';
 import useFollowCam from '../hooks/useFollowCam';
 import { PlayerModel } from './PlayerModel';
 
-enum ActiveAction { idle, walking, jumping };
+enum ActiveAction { idle, walking, jumping, running };
 
 export const ThirdPersonPlayer = ({ position }: {position: [number, number, number]}) => {
   const { pivot } = useFollowCam();
@@ -105,33 +105,54 @@ export const ThirdPersonPlayer = ({ position }: {position: [number, number, numb
     if (document.pointerLockElement) {
       inputVelocity.set(0, 0, 0);
       if (playerGrounded.current) {
-        if (keyboard['KeyW']) {
+
+        if (keyboard['KeyW'] && keyboard['ShiftLeft'] ) {
+          activeAction = ActiveAction.running;
+          inputVelocity.z = -100 * delta;
+        } else if (keyboard['KeyW']) {
           activeAction = ActiveAction.walking;
-          inputVelocity.z = -10 * delta;
+          inputVelocity.z = -20 * delta;
         }
-        if (keyboard['KeyS']) {
+        if (keyboard['KeyS'] && keyboard['ShiftLeft'] ) {
+          activeAction = ActiveAction.running;
+          inputVelocity.z = 100 * delta;
+        } else if (keyboard['KeyS']) {
           activeAction = ActiveAction.walking;
-          inputVelocity.z = 10 * delta;
+          inputVelocity.z = 20 * delta;
         }
-        if (keyboard['KeyA']) {
+        if (keyboard['KeyA'] && keyboard['ShiftLeft'] ) {
+          activeAction = ActiveAction.running;
+          inputVelocity.x = -100 * delta;
+        } else if (keyboard['KeyA']) {
           activeAction = ActiveAction.walking;
-          inputVelocity.x = -10 * delta;
+          inputVelocity.x = -20 * delta;
         }
-        if (keyboard['KeyD']) {
+        if (keyboard['KeyD'] && keyboard['ShiftLeft'] ) {
+          activeAction = ActiveAction.running;
+          inputVelocity.x = 100 * delta;
+        } else if (keyboard['KeyD']) {
           activeAction = ActiveAction.walking;
-          inputVelocity.x = 10 * delta;
+          inputVelocity.x = 20 * delta;
         }
       }
-      inputVelocity.setLength(0.5);
+      // test run
+      // inputVelocity.setLength(0.5);
 
       if (activeAction !== prevActiveAction.current) {
         if (prevActiveAction.current !== ActiveAction.walking && activeAction === ActiveAction.walking) {
           actions['idle'].fadeOut(0.1);
+          actions['run'].fadeOut(0.1);
           actions['walk'].reset().fadeIn(0.1).play();
         }
         if (prevActiveAction.current !== ActiveAction.idle && activeAction === ActiveAction.idle) {
           actions['walk'].fadeOut(0.1);
+          actions['run'].fadeOut(0.1);
           actions['idle'].reset().fadeIn(0.1).play();
+        }
+        if (prevActiveAction.current !== ActiveAction.running && activeAction === ActiveAction.running) {
+          actions['idle'].fadeOut(0.1);
+          actions['walk'].fadeOut(0.1);
+          actions['run'].reset().fadeIn(0.1).play();
         }
         prevActiveAction.current = activeAction;
       }
@@ -155,12 +176,12 @@ export const ThirdPersonPlayer = ({ position }: {position: [number, number, numb
 
       body.applyImpulse([velocity.x, velocity.y, velocity.z], [0, 0, 0]);
     }
-
-    if (activeAction === ActiveAction.walking) {
-      mixer.update(delta * distance * 22.5);
-    } else {
-      mixer.update(delta);
-    }
+    // if (activeAction === ActiveAction.walking) {
+    //   mixer.update(delta * distance * 22.5);
+    // } else {
+    //   mixer.update(delta);
+    // }
+    mixer.update(delta);
 
     group.current.position.lerp(worldPosition, 0.3);
 
