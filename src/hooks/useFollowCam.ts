@@ -24,6 +24,15 @@ export default function useFollowCam() {
     return false;
   }
 
+  const onStickMove = (x: number, y: number) => {
+    pivot.rotation.y -= x * 0.002;
+    const v = followCam.rotation.x - y * 0.002;
+    if (v >= -1.0 && v <= 0.4) {
+      followCam.rotation.x = v;
+      followCam.position.y = -v * followCam.position.z + 1;
+    }
+  }
+
   const onDocumentMouseWheel = (e: WheelEvent) => {
     if (document.pointerLockElement) {
       const v = followCam.position.z + e.deltaY * 0.002;
@@ -49,5 +58,5 @@ export default function useFollowCam() {
     }
   })
 
-  return { pivot };
+  return { pivot, onStickMove };
 }

@@ -3,15 +3,18 @@ import { Vector3, Euler, Quaternion, Matrix4, Mesh, Group } from 'three';
 import { useCompoundBody, useContactMaterial } from '@react-three/cannon';
 import { useFrame } from '@react-three/fiber';
 import { Vec3 } from 'cannon-es';
-import { useStore } from '../store';
+import { useDirection, useRotation, useStore } from '../store';
 import useKeyboard from '../hooks/useKeyboard';
 import useFollowCam from '../hooks/useFollowCam';
 import { PlayerModel } from './PlayerModel';
+import { Direction } from './MobileControls';
+import { useDevice } from '../hooks/useDevice';
 
 enum ActiveAction { idle, walking, jumping, running };
 
 export const ThirdPersonPlayer = ({ position }: {position: [number, number, number]}) => {
-  const { pivot } = useFollowCam();
+  const isMobile = useDevice();
+  const { pivot, onStickMove } = useFollowCam();
   const playerGrounded = useRef(false);
   const inJumpAction = useRef(false);
   const group = useRef(new Group);
@@ -29,6 +32,9 @@ export const ThirdPersonPlayer = ({ position }: {position: [number, number, numb
   const keyboard = useKeyboard();
 
   const { groundObjects, actions, mixer } = useStore((state) => state);
+
+  const direction = useDirection(state => state.direction);
+  const x = useRotation(state => state.x);
 
   useContactMaterial('ground', 'slippery', {
     friction: 0,
@@ -102,35 +108,35 @@ export const ThirdPersonPlayer = ({ position }: {position: [number, number, numb
       targetQuaternion.normalize();
       group.current.quaternion.rotateTowards(targetQuaternion, delta * 20);
     }
-    if (document.pointerLockElement) {
+    if (document.pointerLockElement || isMobile) {
       inputVelocity.set(0, 0, 0);
       if (playerGrounded.current) {
-
+        // if (keyboard['KeyW'] || direction === Direction.FORWARD)
         if (keyboard['KeyW'] && keyboard['ShiftLeft'] ) {
           activeAction = ActiveAction.running;
           inputVelocity.z = -100 * delta;
-        } else if (keyboard['KeyW']) {
+        } else if (keyboard['KeyW'] || direction === Direction.FORWARD) {
           activeAction = ActiveAction.walking;
           inputVelocity.z = -20 * delta;
         }
         if (keyboard['KeyS'] && keyboard['ShiftLeft'] ) {
           activeAction = ActiveAction.running;
           inputVelocity.z = 100 * delta;
-        } else if (keyboard['KeyS']) {
+        } else if (keyboard['KeyS'] || direction === Direction.BACKWARD) {
           activeAction = ActiveAction.walking;
           inputVelocity.z = 20 * delta;
         }
         if (keyboard['KeyA'] && keyboard['ShiftLeft'] ) {
           activeAction = ActiveAction.running;
           inputVelocity.x = -100 * delta;
-        } else if (keyboard['KeyA']) {
+        } else if (keyboard['KeyA'] || direction === Direction.LEFT) {
           activeAction = ActiveAction.walking;
           inputVelocity.x = -20 * delta;
         }
         if (keyboard['KeyD'] && keyboard['ShiftLeft'] ) {
           activeAction = ActiveAction.running;
           inputVelocity.x = 100 * delta;
-        } else if (keyboard['KeyD']) {
+        } else if (keyboard['KeyD'] || direction === Direction.RIGHT) {
           activeAction = ActiveAction.walking;
           inputVelocity.x = 20 * delta;
         }
@@ -182,9 +188,10 @@ export const ThirdPersonPlayer = ({ position }: {position: [number, number, numb
     //   mixer.update(delta);
     // }
     mixer.update(delta);
-
     group.current.position.lerp(worldPosition, 0.3);
-
+    if (isMobile) {
+      onStickMove(x, 0);
+    }
     pivot.position.lerp(worldPosition, 0.1);
   });
 

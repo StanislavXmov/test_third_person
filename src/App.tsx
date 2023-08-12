@@ -6,16 +6,21 @@ import {
 } from '@react-three/drei';
 import { Physics } from '@react-three/cannon'
 // import { Color } from 'three';
+import { useDevice } from './hooks/useDevice';
 import { Level } from './components/Level';
 
 import styles from './App.module.scss';
+import { MobileControls } from './components/MobileControls';
 
 function App() {
+  const isMobile = useDevice();
+  
   return (
     <div className={styles.app}>
+      {isMobile && <MobileControls />}
       <Canvas 
         shadows 
-        onPointerDown={(e) => (e.target as HTMLCanvasElement).requestPointerLock()}
+        onPointerDown={(e) => {!isMobile && (e.target as HTMLCanvasElement).requestPointerLock()}}
       >
         <Environment
           files="public/test.hdr"
