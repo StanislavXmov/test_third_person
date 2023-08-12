@@ -1,6 +1,7 @@
 import { Debug } from '@react-three/cannon';
 import { Floor } from './Floor';
 import { ThirdPersonPlayer } from './ThirdPersonPlayer';
+import { Ground } from './Ground';
 
 type Props = {
   children?: React.ReactNode
@@ -17,7 +18,8 @@ export const Level = () => {
   return (
     <>
       <ToggleDebug>
-        <Floor />
+        {/* <Floor /> */}
+        <Ground />
         <ThirdPersonPlayer position={[0, 1, 0]} />
       </ToggleDebug>
     </>

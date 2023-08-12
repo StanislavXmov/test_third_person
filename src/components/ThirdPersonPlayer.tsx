@@ -97,7 +97,7 @@ export const ThirdPersonPlayer = ({ position }: {position: [number, number, numb
     } else {
       body.linearDamping.set(0.9999999);
     }
-
+    
     const distance = worldPosition.distanceTo(group.current.position);
 
     rotationMatrix.lookAt(worldPosition, group.current.position, group.current.up);
@@ -193,6 +193,13 @@ export const ThirdPersonPlayer = ({ position }: {position: [number, number, numb
       onStickMove(x, 0);
     }
     pivot.position.lerp(worldPosition, 0.1);
+
+    if (group.current.position.y < - 4) {
+      console.log('DROP');
+      group.current.position.lerp(new Vector3(position[0], position[1], position[2]), 0.3);
+      body.position.set(position[0], position[1], position[2]);
+    }
+    
   });
 
   return (
