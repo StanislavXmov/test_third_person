@@ -2,7 +2,7 @@ import { Canvas } from '@react-three/fiber';
 import {
   // OrbitControls,
   Stats,
-  Environment
+  Environment,
 } from '@react-three/drei';
 import { Physics } from '@react-three/cannon'
 // import { Color } from 'three';

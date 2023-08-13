@@ -91,7 +91,7 @@ export const ThirdPersonPlayer = ({ position }: {position: [number, number, numb
       if (i.distance < 0.021) {
         playerGrounded.current = true;
       }
-    })
+    });
     if (!playerGrounded.current) {
       body.linearDamping.set(0);
     } else {
@@ -195,7 +195,6 @@ export const ThirdPersonPlayer = ({ position }: {position: [number, number, numb
     pivot.position.lerp(worldPosition, 0.1);
 
     if (group.current.position.y < - 4) {
-      console.log('DROP');
       group.current.position.lerp(new Vector3(position[0], position[1], position[2]), 0.3);
       body.position.set(position[0], position[1], position[2]);
     }
