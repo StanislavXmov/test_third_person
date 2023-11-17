@@ -7,7 +7,7 @@ import { useGLTF } from '@react-three/drei';
 export const Floor = () => {
   const [ref] = usePlane(() => ({ rotation: [-Math.PI / 2, 0, 0], material: 'ground' }), useRef(new Mesh));
   const groundObjects = useStore((state) => state.groundObjects);
-  const ground = useGLTF('public/floor.glb');
+  const ground = useGLTF('/floor.glb');
 
   useEffect(() => {
     if (!ref.current) {

@@ -27,7 +27,7 @@ export const Ground = () => {
       ground,
     },
     materials: {"Material.001": material}
-  } = useGLTF('public/ground_island.glb') as GroundModel;
+  } = useGLTF('/ground_island.glb') as GroundModel;
 
   const {
     attributes: {

@@ -28,7 +28,7 @@ export const ObjectModel = ({ position }: {position: [number, number, number]}) 
       workplace,
     },
     materials: {"Material.001": material}
-  } = useGLTF('public/workplace.glb') as ObjectModel;
+  } = useGLTF('/workplace.glb') as ObjectModel;
 
   const {
     attributes: {
