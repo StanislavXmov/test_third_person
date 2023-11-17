@@ -23,7 +23,7 @@ function App() {
         onPointerDown={(e) => {!isMobile && (e.target as HTMLCanvasElement).requestPointerLock()}}
       >
         <Environment
-          files="public/test.hdr"
+          files="/test.hdr"
           background
           blur={0.5}
         />
