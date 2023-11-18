@@ -51,12 +51,13 @@ export default function useFollowCam() {
     pivot.add(followCam);
     scene.add(pivot);
     
-    document.addEventListener('mousemove', onDocumentMouseMove);
-    document.addEventListener('wheel', onDocumentMouseWheel);
+    // 2d platformer
+    // document.addEventListener('mousemove', onDocumentMouseMove);
+    // document.addEventListener('wheel', onDocumentMouseWheel);
     return () => {
       
-      document.removeEventListener('mousemove', onDocumentMouseMove);
-      document.removeEventListener('wheel', onDocumentMouseWheel);
+      // document.removeEventListener('mousemove', onDocumentMouseMove);
+      // document.removeEventListener('wheel', onDocumentMouseWheel);
     }
   })
 
