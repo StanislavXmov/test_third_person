@@ -1,7 +1,7 @@
 import { Suspense, useMemo, useRef } from 'react';
 import { Vector3, Euler, Quaternion, Matrix4, Mesh, Group } from 'three';
 import { useCompoundBody, useContactMaterial } from '@react-three/cannon';
-import { useFrame } from '@react-three/fiber';
+import { useFrame, useThree } from '@react-three/fiber';
 import { Vec3 } from 'cannon-es';
 import { useDirection, useRotation, useStore } from '../store';
 import useKeyboard from '../hooks/useKeyboard';
@@ -169,7 +169,7 @@ export const ThirdPersonPlayer = ({ position }: {position: [number, number, numb
           inJumpAction.current = true;
           actions['walk'].fadeOut(0.1);
           actions['idle'].fadeOut(0.1);
-          actions['jump'].reset().fadeIn(0.1).play();
+          actions['jump'].reset().play();
           inputVelocity.y = 6;
         }
       }
@@ -197,6 +197,7 @@ export const ThirdPersonPlayer = ({ position }: {position: [number, number, numb
     if (group.current.position.y < - 4) {
       group.current.position.lerp(new Vector3(position[0], position[1], position[2]), 0.3);
       body.position.set(position[0], position[1], position[2]);
+      body.sleep();
     }
     
   });

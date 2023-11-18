@@ -7,8 +7,10 @@ export default function useFollowCam() {
 
   const pivot = useMemo(() => new Object3D(), []);
   const followCam = useMemo(() => {
-    const o = new Object3D()
-    o.position.set(0, 1, 1.5)
+    const o = new Object3D();
+    // o.position.set(0, 1, 1.5);
+    // platformer
+    o.position.set(0, 0.5, 10)
     return o
   }, []);
 

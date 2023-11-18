@@ -24,7 +24,7 @@ export const Floor = () => {
     <group>
       <mesh ref={ref} rotation={[-Math.PI / 2, 0, 0]} receiveShadow>
         <planeGeometry args={[100, 100]} />
-        <meshStandardMaterial transparent opacity={0} />
+        <meshStandardMaterial transparent opacity={1} />
       </mesh>
       <primitive object={ground.scene.clone()} position={[0, -0.05, 0]}/>
       <primitive object={ground.scene.clone()} position={[10, -0.05, 0]}/>

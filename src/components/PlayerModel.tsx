@@ -11,16 +11,17 @@ interface SceneModel extends GLTF {
     Cube: SkinnedMesh;
   }
   materials: {
-    'Material.004': MeshStandardMaterial;
+    'Material.001': MeshStandardMaterial;
+    // 'Material.004': MeshStandardMaterial;
   }
 }
 
 export const PlayerModel = () => {
   const ref = useRef<Group>(null);
-  const model = useGLTF('/idle.glb') as SceneModel;
-  const walkAnimation = useGLTF('/walking.glb').animations;
-  const jumpAnimation = useGLTF('/jumping.glb').animations;
-  const runningAnimation = useGLTF('/running.glb').animations;
+  const model = useGLTF('/model/idle.glb') as SceneModel;
+  const walkAnimation = useGLTF('/model/walking.glb').animations;
+  const jumpAnimation = useGLTF('/model/jumping.glb').animations;
+  const runningAnimation = useGLTF('/model/running.glb').animations;
   const idleAnimation = model.animations;
 
   const { actions, mixer } = useStore((state) => state);
@@ -45,7 +46,7 @@ export const PlayerModel = () => {
             name="Cube" 
             frustumCulled={false} 
             geometry={model.nodes.Cube.geometry} 
-            material={model.materials['Material.004']} 
+            material={model.materials['Material.001']} 
             skeleton={model.nodes.Cube.skeleton} 
           />
         </group>
@@ -55,8 +56,8 @@ export const PlayerModel = () => {
 }
 
 useGLTF.preload([
-  '/idle.glb',
-  '/walking.glb',
-  '/jumping.glb',
-  '/running.glb',
+  '/model/idle.glb',
+  '/model/walking.glb',
+  '/model/jumping.glb',
+  '/model/running.glb',
 ]);
